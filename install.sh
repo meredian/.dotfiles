@@ -13,7 +13,7 @@ IGNORE_FILES=(.git .gitmodules .gitignore README.md install.sh)
 echo "Installing files from $DIR/ to $HOME/";
 cd $DIR;
 
-for file in `ls -A -I $DIR`; do
+for file in `ls -A $DIR`; do
 	for item in "${IGNORE_FILES[@]}"; do
 		if [[ "$file" == "$item" ]]; then
 			echo "Skipping $file";
