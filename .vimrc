@@ -3,6 +3,8 @@ set enc=utf-8
 set fencs=utf-8,koi8-r
 
 "" global
+" drop all autocmd. Just is case
+autocmd!
 " enable mouse. Also enables scroll for certain terminals lime iTerm. Works
 " like magic!
 if has("mouse")
@@ -68,5 +70,32 @@ map  <silent><F9> :call CheckSyntax()<CR>
 imap <silent><F9> :call CheckSyntax()<CR>
 vmap <silent><F9> :call CheckSyntax()<CR>
 
-"" run current script in shell
+"" Custom mappings
+" run current script in shell
 nnoremap ,r :<C-u>!%:p<CR>
+" Ctrl-C to exit insert mode
+inoremap <c-c> <esc>
+
+"" AutoCmd
+augroup vimrcEx
+  " clean autogroup
+  autocmd!
+  " Jump to last cursor position unless it's invalid or in an event handler
+  autocmd BufReadPost *
+    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+    \   exe "normal g`\"" |
+    \ endif
+augroup END
+
+"" Multipurpose tab key
+function! InsertTabWrapper()
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
+endfunction
+inoremap <expr> <tab> InsertTabWrapper()
+inoremap <s-tab> <c-n>
+
