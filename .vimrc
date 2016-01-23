@@ -21,13 +21,15 @@ set ignorecase smartcase
 " highlight current line
 set cursorline
 
-" :set t_Co=256 " 256 colors
-" :set background=dark
-
 "" pathogen
 execute pathogen#infect()
 syntax on
 filetype plugin indent on
+
+"" Wellsokai color scheme
+:set t_Co=256 " 256 colors
+:set background=dark
+colorscheme molokai
 
 "" CtrlP
 let g:ctrlp_map='<c-p>'
