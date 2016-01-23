@@ -86,6 +86,7 @@ nnoremap ,r :<C-u>!%:p<CR>
 inoremap <c-c> <esc>
 " Expand %% to current file path in command mode
 cnoremap <expr> %% expand('%:h').'/'
+nnoremap <CR> :noh<CR>
 
 "" AutoCmd
 augroup vimrcEx
