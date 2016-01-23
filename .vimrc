@@ -10,8 +10,6 @@ if has("mouse")
 endif
 " enable highlighting
 set hlsearch
-" chdir for switching buffer
-autocmd BufEnter * silent! lcd %:p:h
 " show matching brackets
 set showmatch
 " set matching highlight color
@@ -22,13 +20,9 @@ execute pathogen#infect()
 syntax on
 filetype plugin indent on
 
-"" NERD_tree
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
 "" CtrlP
 let g:ctrlp_map='<c-p>'
-let g:ctrlp_cmd='CtrlP'
+let g:ctrlp_cmd='CtrlP :pwd'
 
 "" netrw
 " disable top netrw banner
@@ -39,13 +33,8 @@ let g:netrw_liststyle=3
 let g:netrw_list_hide='.*\.swp$'
 " open files in windows number # if exists
 let g:netrw_chgwin=2
-" remap shift-control to fire up the sidebar
-" works like shit, todo research
-nnoremap <C-w>e :leftabove 20vs<CR>:e `pwd`<CR>
-" nnoremap <silent> <C-M> :leftabove 20vs<CR>:e .<CR>
-" " remap control-enter to open files in new tab
-" nmap <silent> <C-CR> t :rightbelow 20vs<CR>:e .<CR>:wincmd h<CR>
-" nmap <silent> <NL> t :rightbelow 20vs<CR>:e .<CR>:wincmd h<CR>
+" remap ctrl-w e to fire up the sidebar
+nnoremap <C-w>e :leftabove 30vs<CR>:e %:h<CR>
 
 "" perl utils
 " Исправляет дурацкую цветовую схему "белое на желтом" в окне с ошибками
@@ -78,3 +67,6 @@ endfunction
 map  <silent><F9> :call CheckSyntax()<CR>
 imap <silent><F9> :call CheckSyntax()<CR>
 vmap <silent><F9> :call CheckSyntax()<CR>
+
+"" run current script in shell
+nnoremap ,r :<C-u>!%:p<CR>
