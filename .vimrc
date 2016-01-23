@@ -16,6 +16,13 @@ set hlsearch
 set showmatch
 " set matching highlight color
 highlight MatchParen ctermbg=blue guibg=lightblue
+" make searches case-sensitive only if they contain upper-case characters
+set ignorecase smartcase
+" highlight current line
+set cursorline
+
+" :set t_Co=256 " 256 colors
+" :set background=dark
 
 "" pathogen
 execute pathogen#infect()
@@ -75,6 +82,8 @@ vmap <silent><F9> :call CheckSyntax()<CR>
 nnoremap ,r :<C-u>!%:p<CR>
 " Ctrl-C to exit insert mode
 inoremap <c-c> <esc>
+" Expand %% to current file path in command mode
+cnoremap <expr> %% expand('%:h').'/'
 
 "" AutoCmd
 augroup vimrcEx
