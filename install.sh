@@ -8,19 +8,11 @@ function exec {
 }
 
 DIR="$(cd $(dirname ${BASH_SOURCE[0]}) && pwd)";
-IGNORE_FILES=(.git .gitmodules .gitignore README.md install.sh)
 
 echo "Installing files from $DIR/ to $HOME/";
 cd $DIR;
 
-for file in `ls -A $DIR`; do
-	for item in "${IGNORE_FILES[@]}"; do
-		if [[ "$file" == "$item" ]]; then
-			echo "Skipping $file";
-			continue 2;
-		fi
-	done
-
+for file in `cat $DIR/install_files`; do
 	src="$DIR/$file";
 	trg="$HOME/$file";
 	if [ -e $trg ]; then
