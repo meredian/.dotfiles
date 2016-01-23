@@ -20,6 +20,10 @@ highlight MatchParen ctermbg=blue guibg=lightblue
 set ignorecase smartcase
 " highlight current line
 set cursorline
+" show cursor position
+set ruler
+" disable scanning files for completion
+set complete-=i
 
 "" pathogen
 execute pathogen#infect()
@@ -86,6 +90,7 @@ nnoremap ,r :<C-u>!%:p<CR>
 inoremap <c-c> <esc>
 " Expand %% to current file path in command mode
 cnoremap <expr> %% expand('%:h').'/'
+" map CR to drop search highlight in normal mode
 nnoremap <CR> :noh<CR>
 
 "" AutoCmd
