@@ -102,6 +102,8 @@ augroup vimrcEx
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \   exe "normal g`\"" |
     \ endif
+  autocmd FileType javascript setlocal expandtab shiftwidth=2 softtabstop=2
+  autocmd FileType perl setlocal shiftwidth=8 softtabstop=8
 augroup END
 
 "" Multipurpose tab key
