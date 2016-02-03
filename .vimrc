@@ -69,7 +69,7 @@ function CheckSyntax()
                 endif
 
                 if cmd != ''
-                        let output = system(cmd.expand('%'))
+                        let output = system(cmd . expand('%'))
                         echo strpart(output, 0, strlen(output)-1)
                 else
                         echo 'Have no idea how to check syntax for filetype '.&ft
@@ -79,13 +79,31 @@ function CheckSyntax()
         endif
 endfunction
 
-map  <silent><F9> :call CheckSyntax()<CR>
-imap <silent><F9> :call CheckSyntax()<CR>
-vmap <silent><F9> :call CheckSyntax()<CR>
+function CheckStyle()
+        if &filetype != ''
+                let cmd=''
+                if &filetype == 'perl'
+                        let cmd='yabs-stylechecker '
+                endif
+
+                if cmd != ''
+                        let output = system(cmd . expand('%'))
+                        echo strpart(output, 0, strlen(output)-1)
+                else
+                        echo 'Have no idea how to check style for filetype '.&ft
+                endif
+        else
+                echo 'unknown file type or filetype plugin not loaded'
+        endif
+endfunction
+
+noremap  <silent><F9> :call CheckSyntax()<CR>
+inoremap <silent><F9> :call CheckSyntax()<CR>
+vnoremap <silent><F9> :call CheckSyntax()<CR>
+noremap  <silent><F10> :call CheckStyle()<CR>
+inoremap <silent><F10> :call CheckStyle()<CR>
 
 "" Custom mappings
-" run current script in shell
-nnoremap ,r :<C-u>!%:p<CR>
 " Ctrl-C to exit insert mode
 inoremap <c-c> <esc>
 " Expand %% to current file path in command mode
@@ -102,7 +120,7 @@ augroup vimrcEx
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \   exe "normal g`\"" |
     \ endif
-  autocmd FileType javascript setlocal expandtab shiftwidth=2 softtabstop=2
+  autocmd FileType javascript haml handlebars html setlocal expandtab shiftwidth=2 softtabstop=2
   autocmd FileType perl setlocal shiftwidth=8 softtabstop=8
 augroup END
 
@@ -117,4 +135,30 @@ function! InsertTabWrapper()
 endfunction
 inoremap <expr> <tab> InsertTabWrapper()
 inoremap <s-tab> <c-n>
+
+function! RunAndRemember(filename)
+	" Write current file if exists
+	if expand("%") != ""
+		:w
+	end
+	" Save executable file name to tab scope variable
+	let t:last_run_file = a:filename
+	" Run executable file
+	exec ":!" . a:filename
+endfunction
+
+function! RunIfRemembered()
+	if exists("t:last_run_file")
+		if expand("%") != ""
+			:w
+		end
+		echom "Running " . t:last_run_file
+		exec ":!" . t:last_run_file
+	else
+		echom "No file to run remembered"
+	endif
+endfunction
+" run current script in shell
+nnoremap ,r :<C-u>:call RunAndRemember("%:p")<CR>
+nnoremap ,t :<C-u>:call RunIfRemembered()<CR>
 
