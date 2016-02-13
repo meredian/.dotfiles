@@ -57,7 +57,7 @@ nnoremap <C-w>e :leftabove 30vs<CR>:e %:h<CR>
 " Check perl syntax - some magic thing
 nmap @c :w<cr>:compiler perl<CR>:make<CR>:cw<CR>
 
-function CheckSyntax()
+function! CheckSyntax()
         if &filetype != ''
                 let cmd=''
                 if &filetype == 'perl'
@@ -79,7 +79,7 @@ function CheckSyntax()
         endif
 endfunction
 
-function CheckStyle()
+function! CheckStyle()
         if &filetype != ''
                 let cmd=''
                 if &filetype == 'perl'
@@ -120,7 +120,7 @@ augroup vimrcEx
     \ if line("'\"") > 0 && line("'\"") <= line("$") |
     \   exe "normal g`\"" |
     \ endif
-  autocmd FileType javascript haml handlebars html setlocal expandtab shiftwidth=2 softtabstop=2
+  autocmd FileType javascript setlocal expandtab shiftwidth=2 softtabstop=2
   autocmd FileType perl setlocal shiftwidth=8 softtabstop=8
 augroup END
 
@@ -137,6 +137,7 @@ inoremap <expr> <tab> InsertTabWrapper()
 inoremap <s-tab> <c-n>
 
 function! RunAndRemember(filename)
+	echom "We are running file!"
 	" Write current file if exists
 	if expand("%") != ""
 		:w
@@ -149,16 +150,17 @@ endfunction
 
 function! RunIfRemembered()
 	if exists("t:last_run_file")
+		" Write current file if exists
 		if expand("%") != ""
 			:w
 		end
-		echom "Running " . t:last_run_file
+		" Run saved file
 		exec ":!" . t:last_run_file
 	else
 		echom "No file to run remembered"
 	endif
 endfunction
 " run current script in shell
-nnoremap ,r :<C-u>:call RunAndRemember("%:p")<CR>
+nnoremap ,r :<C-u>:call RunAndRemember(expand("%:p"))<CR>
 nnoremap ,t :<C-u>:call RunIfRemembered()<CR>
 
