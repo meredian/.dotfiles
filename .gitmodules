@@ -6,7 +6,7 @@
 	url = https://github.com/tomasr/molokai
 [submodule ".vim/bundle/editorconfig-vim"]
 	path = .vim/bundle/editorconfig-vim
-	url = git@github.com:editorconfig/editorconfig-vim.git
+	url = https://github.com/editorconfig/editorconfig-vim.git
 [submodule ".vim/bundle/vim-pug"]
 	path = .vim/bundle/vim-pug
-	url = git://github.com/digitaltoad/vim-pug.git
+	url = https://github.com/digitaltoad/vim-pug.git
