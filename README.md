@@ -7,7 +7,7 @@ shell config
 
 ## Usage
 
-Just use and ammend whenever required. Inspired by Garry Bernhard "Destroy all software" and my whole developer's life
+Just use and amend whenever required. Inspired by Garry Bernhard "Destroy all software" and my whole developer's life
 
 ## TODO
 
