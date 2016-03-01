@@ -1,8 +1,10 @@
 shell config
 ============
 
-Best way to use repo - check it to folder "config" and change worktree root. This will prevent interferring current repo with other files.
+## Installation
  
-git clone ...
-git config core.worktree "../../"
+    $ git clone https://github.com/meredian/.dotfiles.git && .dotfiles/install.sh
 
+## Usage
+
+    Just use and ammend whenever required. Inspired by Garry Bernhard "Destroy all software" and my whole developer's life
