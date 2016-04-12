@@ -136,31 +136,32 @@ endfunction
 inoremap <expr> <tab> InsertTabWrapper()
 inoremap <s-tab> <c-n>
 
-function! RunAndRemember(filename)
-	echom "We are running file!"
+function! RunAndRemember(cmd)
+	echom "We are running command!"
 	" Write current file if exists
 	if expand("%") != ""
 		:w
 	end
-	" Save executable file name to tab scope variable
-	let t:last_run_file = a:filename
-	" Run executable file
-	exec ":!" . a:filename
+	" Save command name to tab scope variable
+	let t:last_run_cmd = a:cmd
+	" Run command
+	exec a:cmd
 endfunction
 
 function! RunIfRemembered()
-	if exists("t:last_run_file")
+	if exists("t:last_run_cmd")
 		" Write current file if exists
 		if expand("%") != ""
 			:w
 		end
-		" Run saved file
-		exec ":!" . t:last_run_file
+		" Run saved command
+		exec t:last_run_cmd
 	else
-		echom "No file to run remembered"
+		echom "No command to run remembered"
 	endif
 endfunction
 " run current script in shell
-nnoremap ,r :<C-u>:call RunAndRemember(expand("%:p"))<CR>
+nnoremap ,r :<C-u>:call RunAndRemember("!" . expand("%:p"))<CR>
+nnoremap ,s :<C-u>:call RunAndRemember("! sudo " . expand("%:p"))<CR>
 nnoremap ,t :<C-u>:call RunIfRemembered()<CR>
 
